@@ -1,0 +1,8 @@
+form {
+    display: grid;
+    grid-template-columns: 200px 0.4fr;
+    justify-content: center;
+}
+.error {
+    color: red;
+}
