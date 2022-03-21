@@ -1,0 +1,21 @@
+.main {
+    display: grid;    
+    grid-column-gap: 2em;
+    grid-row-gap: 2em;
+    padding: 1em;
+}
+.fourcolumnLayout {
+    grid-template-columns: repeat(3, 1fr) 2fr;
+}
+.threecolumnLayout {
+    grid-template-columns: repeat(3, 1fr);
+}
+.inProgressSection {
+    
+}
+.doneSection {
+
+}
+.detailedView {
+    
+}
