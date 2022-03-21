@@ -1,0 +1,38 @@
+.cardContainer {
+    background: #f7f7f7;
+    border: solid 1px black;
+    margin: 1em;
+    padding: 10px;
+}
+.todoTitle {
+    text-align: left;
+    margin: 0;
+    padding: 0 0 5px 5px;
+}
+.todoDetails{
+    text-align: left;
+    padding-left: 5px;
+}
+.buttonsContainer {
+    display: inline-block;
+    padding: 3px 0;
+    margin-top: 6px;
+}
+.editButton {
+    background-color: #2599e2;
+    margin-right: 5px;
+}
+.deleteButton {
+    background-color: #e51f1f;
+    margin-left: 5px;
+}
+button {
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 15px;
+    border-radius: 3px;
+}
+i {
+    padding-right: 5px;
+}
