@@ -10,14 +10,14 @@ const todoRoutes = require('./api/routes/todos');
 console.log(`env var JWTKEY ${process.env.JWT_KEY}`);
 //Mongoose connection
 
-/* mongoose.connect('')
+mongoose.connect('mongodb+srv://' + process.env.MONGO_ATLAS_USERNAME + ':' + encodeURIComponent(process.env.MONGO_ATLAS_PW) + '@cluster0.irrxv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
     .then( () => {
         console.log('MongoDB connected');
     })
     .catch((err) => {
         console.log(err);
         console.log('Error while connecting to MongoDB');
-    }); */
+    });
 
 /* 
     Middlewares

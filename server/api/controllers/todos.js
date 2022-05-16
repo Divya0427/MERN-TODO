@@ -1,9 +1,42 @@
 const mongoose = require('mongoose');
-//const Todo = require('../models/todo');
+const Todo = require('../models/todo');
 
 exports.todos_get_all = (req, res, next) => {
     console.log("Get all the Todos");
-    res.status(200).json({
+    Todo.find()
+        .select()
+        .exec()
+        .then(docs => {
+            const result = {
+                count: docs.length,
+                todos: docs.map(doc => {
+                    var requestedUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+                    return {
+                        _id: doc._id,
+                        title: doc.title,
+                        description: doc.description,
+                        status: doc.status,
+                        priority: doc.priority,
+                        reporter: doc.reporter,
+                        assignee: doc.assignee,
+                        isFavorite: doc.isFavorite,
+                        request: {
+                            type: 'GET',
+                            url: `${requestedUrl}/${doc._id}`
+                        }
+                    }
+                })
+            }
+            
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+
+    /* res.status(200).json({
         tasks: [
             {
                 type: "Todo",
@@ -14,7 +47,7 @@ exports.todos_get_all = (req, res, next) => {
                         description: "some description related to todo task1 goes here",
                         assignee: "ADivya",
                         reporter: "R_ADivya",
-                        status: "Not Started",
+                        status: "Todo",
                         priority: "Cosmetic"
                     },
                     {
@@ -23,7 +56,7 @@ exports.todos_get_all = (req, res, next) => {
                         description: "some description related to todo task2 goes here",
                         assignee: "BDivya",
                         reporter: "R_BDivya",
-                        status: "Not Started",
+                        status: "Todo",
                         priority: "Cosmetic"
                     }
                 ]
@@ -37,7 +70,7 @@ exports.todos_get_all = (req, res, next) => {
                         description: "some description related to todo task3 goes here",
                         assignee: "CDivya",
                         reporter: "R_CDivya",
-                        status: "In Progress",
+                        status: "InProgress",
                         priority: "Minor"
                     },
                     {
@@ -46,7 +79,7 @@ exports.todos_get_all = (req, res, next) => {
                         description: "some description related to todo task4 goes here",
                         assignee: "DDivya",
                         reporter: "R_DDivya",
-                        status: "In Progress",
+                        status: "InProgress",
                         priority: "Moderate"
                     }
                 ]
@@ -75,7 +108,7 @@ exports.todos_get_all = (req, res, next) => {
                 ]
             }
         ]
-    });
+    }); */
     /* (req, res) => {
         console.log("requesting todos");
         res.json({"message": "Hello"});
@@ -83,9 +116,46 @@ exports.todos_get_all = (req, res, next) => {
 }; 
 
 exports.todos_create_todo = (req, res, next) => {
-    res.status(200).json({
-        message: 'create todo'
+    console.log(req.body);
+    const todo = new Todo({
+        _id: new mongoose.Types.ObjectId(),
+        title: req.body.title,
+        description: req.body.description,
+        assignee: req.body.assignee,
+        reporter: req.body.reporter,
+        status: req.body.status,
+        priority: req.body.priority,
+        isFavorite: req.body.isFavorite
     });
+    todo.save()
+        .then(result => {
+            console.log(result);
+            var requestedUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+            res.status(201).json({
+                message: 'New todo is created successfully',
+                createdTodo: {
+                    _id: result._id,
+                    title: result.title,
+                    description: result.description,
+                    assignee: result.assignee,
+                    reporter: result.reporter,
+                    status: result.status,
+                    priority: result.priority,
+                    isFavorite: result.isFavorite,
+                    request: {
+                        type: 'POST',
+                        url: `${requestedUrl}/${result._id}`
+                    }
+                }
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+
 };
 
 exports.todos_get_todo = (req, res, next) => {

@@ -1,7 +1,6 @@
 import classes from './Card.module.css';
 
 const Card = (props) => {
-    console.log(props);
     const dragStartHandler = (e) => {
         console.log("Drag start");
         /* let img = new Image();
@@ -22,11 +21,11 @@ const Card = (props) => {
                 <div>Reporter: {props.data.reporter}</div>
             </div>
             <div className={classes.buttonsContainer}>
-                <button className={classes.editButton}>
+                <button className={classes.editButton} onClick={props.editHandler} data-id={props.data._id}>
                     <i className="glyphicon glyphicon-pencil"></i>
                     Edit
                 </button>
-                <button className={classes.deleteButton}>
+                <button className={classes.deleteButton} onClick={props.deleteHandler} data-id={props.data._id}>
                     <i className="glyphicon glyphicon-trash"></i>
                     Delete
                 </button>

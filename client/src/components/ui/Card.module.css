@@ -3,6 +3,7 @@
     border: solid 1px black;
     margin: 1em;
     padding: 10px;
+    border-radius: 10px;
 }
 .todoTitle {
     text-align: left;

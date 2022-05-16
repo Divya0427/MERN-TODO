@@ -39,6 +39,37 @@ create a cluster
 https://www.section.io/engineering-education/nodejs-mongoosejs-mongodb/
 Install Postman for API testing
 
+mongoose.connect('mongodb+srv://' + process.env.MONGO_ATLAS_USERNAME + ':' + encodeURIComponent(process.env.MONGO_ATLAS_PW) + '@cluster0.irrxv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+
+the above statement would connect us with the MongoDB
+- username, pwd would be in nodemon.json
+- Login MongoDB Atlas Cloud; Use the same data in nodemonjson as username, pwd
+- Create cluster; Connect to cluster; Connect your application; Make sure we have driver as Nodejs with the latest version; Copy the connection string and add into our application code
+- Security > Network Access > Add IP Address > Add
+- Make sure the password is encodeURIComponent
+- Connected to DB successfully
+
+Why to opt redux-toolkit
+
+
+Reduxjs/toolkit
+- npm i @reduxjs/toolkit
+- create store.js and configure it using configureStore. Export this to use it in other components
+- Provide this store to the root component in index.js using Provider and store
+- createSlice add it in the store while configuring the store
+- Use redux state and actions in react components
+- With Redux-Toolkit, we get Thunk already integrated as a dependency.
+- 
+
+
+
+
+
+
+
+
+
+
 
 #app.js
 File which contains

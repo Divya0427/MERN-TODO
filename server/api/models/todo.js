@@ -23,6 +23,10 @@ const todoSchema = mongoose.Schema({
         required: true
     },
     status: {
+        type: String,
+        required: true
+    },
+    isFavorite: {
         type: Boolean,
         required: true
     }
