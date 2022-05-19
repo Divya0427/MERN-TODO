@@ -5,7 +5,53 @@ It's a simple Todo App which has a navigation.
 User can add the Todos and mark them as favorites as well.
 User can Edit and also delete the todos.
 
-body-parser: allows express to parse the request payload into the req.body object
+# middleware
+- Middleware is a function that has access to the request and response lifecycle methods, and the next() method to continue logic in your Express server.
+- A request is something that's coming from a browser that invokes a particular function to perform certain tasks and return a response. “A particular function” in this case is a middleware.
+- Middleware is executed during the window between when a server receives a request and when it sends a response.
+- Middleware is software which lies between an operating system and the applications running on it. Essentially functioning as hidden translation layer, middleware enables communication and data management for distributed applications
+
+
+# morgan:
+- A Node. js and Express middleware to log HTTP requests and errors, and simplifies the process.
+- 
+
+# body-parser: 
+- Allows express to parse the request payload into the req.body object
+- body-parser(for parsing JSON and URL-encoded data)
+- As of Express version 4.16+, their own body-parser implementation is now included in the default Express package so there is no need for you to download another      dependency body-parser
+- app.use(bodyparser.json()); can be replaced with app.use(express.json());
+- app.use(bodyParser.urlencoded({extended: true})); can be replaced with app.use(express.urlencoded()); //Parse URL-encoded bodies
+- It's the Node. js body parsing middleware.
+- It is responsible for parsing the incoming request bodies in a middleware before you handle it.
+- body-parser extracts the entire body portion of an incoming request stream and exposes it on req. body
+- This module parses the text, JSON, buffer, string and URL encoded data submitted using HTTP POST request.
+- 
+
+# multer:
+- For parsing multipart/form-data middleware
+- Multipart/form-data is a type of encoding
+- It works only with POST method
+- Without multer, you can’t upload files using form. The uploaded files will not be encoded
+- A node. js middleware for handling multipart/form-data , which is primarily used for uploading files.
+- You cannot use Multer without Express because it's Express middleware.
+- 
+
+2 ways of passing parameters to Express application/backend
+GET request:
+- Named placeholders: app.get('/user/:id', function(req, res) {
+                         res.send('user ' + req.params.id);
+                      });
+- URL's querystring/ GET parameters: http://localhost/books?category=biographies&type=paperback
+                      console.log('Category: ' + req.query['category']);
+                      console.log('Type: ' + req.query['type']);
+POST request: also have 2 aspects
+- Text data
+    - Using the body-parser middleware
+    - console.log('Username: ' + req.body.username);//Here username is the name attribute of HTML form element
+- File uploads
+
+
 
 - `mkdir MERN-todo-app`
 - `npx create-react-app client`
