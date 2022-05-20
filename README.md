@@ -18,6 +18,7 @@ body-parser: allows express to parse the request payload into the req.body objec
 - server/api:  mkdir routes controllers models middlewares
 - Generally, in order to run our React app with our Node Express API back-end on our localhost server, we would usually need to run commands like npm start for both the front-end and the back-end. But with "concurrently" node package, we can run only 1 command line to start both our React front-end and API backend server.
 - update the scripts porperty of server/package.json to accommodate concurrently.
+- Update client/package.json with "proxy": "http://localhost:5000/"(server running on 5000 whereas react on 3000; In the browser we see localhost:3000 but as we added proxy it redirects the request to server 5000)
 - Run the application from server folder with `npm start`
 
 # Client setup
