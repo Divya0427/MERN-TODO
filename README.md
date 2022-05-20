@@ -28,21 +28,12 @@ User can Edit and also delete the todos.
      
     - Invoke on specific uri path
         - Using use():
-
-app.use(function (req, res, next) {
-    console.log('Time:', Date.now())
-    next()
-});
-
-      
-      app.use('/user/:id', function (req, res, next) {
-        console.log('Request Type:', req.method)
-        next()
-      });
-      
+          app.use('/user/:id', function (req, res, next) {
+            console.log('Request Type:', req.method)
+            next()
+          });
     
-        - Using METHOD():
-          
+        - Using METHOD():      
           app.get('/user/:id', function (req, res, next) {
             res.send('USER')
           });
@@ -55,9 +46,56 @@ app.use(function (req, res, next) {
           console.log('Request Type:', req.method)
           next()
         });
+    - Using next() with Route handlers. Route handlers enable you to define multiple routes for a path
+        ```
+        //Route 1
+        app.get('/user/:id', function (req, res, next) {
+          console.log('ID:', req.params.id)
+          next()
+        }, function (req, res, next) {
+          res.send('User Info')
+        })
 
+        // Route 2
+        app.get('/user/:id', function (req, res, next) {
+          res.end(req.params.id)
+        });//The second route will not cause any problems, but it will never get called because the first route ends the request-response cycle
+        ```
+    - Using next(‘route’) to skip middlewares and goto another Route. To skip the rest of the middleware functions from a router middleware stack, call next('route')       to pass control to the next route. next('route') will work only in middleware functions that were loaded by using the app.METHOD() or router.METHOD()functions
+        ```
+        //Route 1
+        app.get('/user/:id', function (req, res, next) {
+          if (req.params.id === '0') 
+                  next('route')
+          else 
+                  next()
+        }, function (req, res, next) {
+          res.send('regular')
+        })
 
-    
+        // Route 2
+        app.get('/user/:id', function (req, res, next) {
+          res.send('special')
+        })
+        ```
+    - Using array in declaring middlewares
+        ```
+        function logOriginalUrl (req, res, next) {
+          console.log('Request URL:', req.originalUrl)
+          next()
+        } 
+
+        function logMethod(req, res, next) {
+          console.log('Request Type:', req.method)
+          next()
+        }
+
+        var logStuff = [logOriginalUrl, logMethod]
+        app.get('/user/:id', logStuff, function (req, res, next) {
+          res.send('User Info')
+        })
+
+        ```
   
   
 - Router-level middleware
