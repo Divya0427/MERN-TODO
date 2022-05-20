@@ -108,11 +108,11 @@ User can Edit and also delete the todos.
 
         ```
   
-  
-- Router-level middleware
-- Error-handling middleware
-- Built-in middleware
-- Third-party middleware
+- Application-level middleware(app.use or app.<METHOD>)  
+- Router-level middleware(router.use or router.METHOD()): similar to the application level middleware and works in the same manner, except it can be generated and limited to an instance of express.Router () `const router = express.Router();`
+- Error-handling middleware(app.use (err, req, res, next))
+- Built-in middleware: express.static, express.json, express.urlencoded
+- Third-party middleware(bodyparser, cookieparser etc.,)
 ![image](https://user-images.githubusercontent.com/9032135/169496626-e148baf0-6c79-4a83-94f9-6f50fb38cfb8.png)
 
 
