@@ -176,6 +176,14 @@ POST request: also have 2 aspects
         // Store hash in your pwd DB.
     });
     ```
+    To check a Pwd:
+    // Load hash from your Pwd DB.
+    bcrypt.compare(myPlaintextPwd, hash, function(err, result) {
+        // result == true
+    });
+    bcrypt.compare(someOtherPlaintextPwd, hash, function(err, result) {
+        // result == false
+    });
 
 
 - `mkdir MERN-todo-app`
