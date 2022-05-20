@@ -7,14 +7,57 @@ User can Edit and also delete the todos.
 
 # middleware
 - Middleware is a function that has access to the request and response lifecycle methods, and the next() method to continue logic in your Express server.
-- A request is something that's coming from a browser that invokes a particular function to perform certain tasks and return a response. “A particular function” in this case is a middleware.
+- A request is something that's coming from a browser that invokes a particular function to perform certain tasks and return a response. “A particular function” in       this case is a middleware.
 - Middleware is executed during the window between when a server receives a request and when it sends a response.
-- Middleware is software which lies between an operating system and the applications running on it. Essentially functioning as hidden translation layer, middleware enables communication and data management for distributed applications
+- Middleware is software which lies between an operating system and the applications running on it. Essentially functioning as hidden translation layer, middleware       enables communication and data management for distributed applications.
+- M Execute any code.
+- M Make changes to the request and the response objects.
+- M End the request-response cycle.
+- M Call the next middleware function in the stack.
+- If the current middleware function does not end the request-response cycle, it must call next() to pass control to the next middleware function. Otherwise, the         request will be left hanging
+# Types of middlewares:
+- Application-level middleware(app.use or app.<METHOD>)
+    - Ex: Authentication middleware
+    - Every route should be authenticated
+    - Invoke on all the requests. The function is executed every time the app receives a request
+      app.use(function (req, res, next) {
+        console.log('Time:', Date.now())
+        next()
+      });
+    - Invoke on specific uri path
+        - Using use():
+          app.use('/user/:id', function (req, res, next) {
+            console.log('Request Type:', req.method)
+            next()
+          });
+        - Using METHOD():
+          app.get('/user/:id', function (req, res, next) {
+            res.send('USER')
+          });
+    - Invoke series of middleware functions on specific uri path
+        app.use('/user/:id', function (req, res, next) {
+          console.log('Request URL:', req.originalUrl)
+          next()
+        }, function (req, res, next) {
+          console.log('Request Type:', req.method)
+          next()
+        });
+
+
+    
+  
+  
+- Router-level middleware
+- Error-handling middleware
+- Built-in middleware
+- Third-party middleware
+![image](https://user-images.githubusercontent.com/9032135/169496626-e148baf0-6c79-4a83-94f9-6f50fb38cfb8.png)
+
+
 
 
 # morgan:
 - A Node. js and Express middleware to log HTTP requests and errors, and simplifies the process.
-- 
 
 # body-parser: 
 - Allows express to parse the request payload into the req.body object
@@ -26,7 +69,6 @@ User can Edit and also delete the todos.
 - It is responsible for parsing the incoming request bodies in a middleware before you handle it.
 - body-parser extracts the entire body portion of an incoming request stream and exposes it on req. body
 - This module parses the text, JSON, buffer, string and URL encoded data submitted using HTTP POST request.
-- 
 
 # multer:
 - For parsing multipart/form-data middleware
@@ -35,7 +77,12 @@ User can Edit and also delete the todos.
 - Without multer, you can’t upload files using form. The uploaded files will not be encoded
 - A node. js middleware for handling multipart/form-data , which is primarily used for uploading files.
 - You cannot use Multer without Express because it's Express middleware.
+
+# next()/ return next()/ next('route'):
+- next() will run or execute the code after all the middleware function is finished.
+- return next() will jump out the callback immediately and the code below return next() will be unreachable.
 - 
+
 
 2 ways of passing parameters to Express application/backend
 GET request:
