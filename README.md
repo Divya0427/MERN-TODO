@@ -20,25 +20,34 @@ User can Edit and also delete the todos.
     - Ex: Authentication middleware
     - Every route should be authenticated
     - Invoke on all the requests. The function is executed every time the app receives a request
-      
+      ```
       app.use(function (req, res, next) {
         console.log('Time:', Date.now())
         next()
       });
+      ```
+      
      
     - Invoke on specific uri path
         - Using use():
-          app.use('/user/:id', function (req, res, next) {
+        ```
+        app.use('/user/:id', function (req, res, next) {
             console.log('Request Type:', req.method)
             next()
-          });
+        });
+        ```
+          
     
-        - Using METHOD():      
-          app.get('/user/:id', function (req, res, next) {
+        - Using METHOD():
+        ```
+        app.get('/user/:id', function (req, res, next) {
             res.send('USER')
-          });
+        });
+        ```
+          
           
     - Invoke series of middleware functions on specific uri path
+        ```
         app.use('/user/:id', function (req, res, next) {
           console.log('Request URL:', req.originalUrl)
           next()
@@ -46,6 +55,8 @@ User can Edit and also delete the todos.
           console.log('Request Type:', req.method)
           next()
         });
+        ```
+        
     - Using next() with Route handlers. Route handlers enable you to define multiple routes for a path
         ```
         //Route 1
