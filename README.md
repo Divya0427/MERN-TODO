@@ -159,7 +159,23 @@ POST request: also have 2 aspects
     - Using the body-parser middleware
     - console.log('Username: ' + req.body.username);//Here username is the name attribute of HTML form element
 - File uploads
-
+# bcrypt
+- Pwd hashing is a one-way ticket to data encryption. Hashing performs a one-way transformation on a pwd, turning the pwd into another String, called the hashed pwd. Hashing is called one way because it's practically impossible to get the original text from a hash.
+- To hash a pwd:
+    Technique 1 (generate a salt and hash on separate function calls):
+    ```
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+       bcrypt.hash(myPlaintextpwd, salt, function(err, hash) {
+           // Store hash in your pwd DB.
+       });
+    });
+    ```
+   Technique 2 (auto-gen a salt and hash):
+    ```
+    bcrypt.hash(myPlaintextpwd, saltRounds, function(err, hash) {
+        // Store hash in your pwd DB.
+    });
+    ```
 
 
 - `mkdir MERN-todo-app`
