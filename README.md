@@ -254,8 +254,59 @@ POST request: also have 2 aspects
     - If we omit the 2nd arg [], this fn will be executed whenever component does; Basically there's no difference    
     - empty array: Means there's no dependency; executed when the react component is rendered for the 1st time; subsequent updates to the component would not run this fn
     - [ isLoading ]: Whenever this state variable changes, then this fn will be executed
-    
-
+# What are React hooks(RH)?
+- It allows you to use state and other React features without writing a class.
+- Hooks are the functions which "hook into" React state and lifecycle features from function components.
+- It does not work inside classes.
+# When we use hooks?
+- If we want to add some state to a function component, we can use a hook inside the existing function component. Previously we do this by converting it to a class component.
+# Rules of hooks
+1. Only call Hooks at the top level of the react functions
+    Do not call hooks inside,
+    - loops
+    - nested functions
+    - conditions
+2. Only call Hooks from React functions and custom hooks; not from regular JS functions
+# Benefits of hooks
+- Re-usability of stateful logic: With the help of custom hooks.
+- In react class component, we split our work in different life-cycle methods like componentDidMount, componentDidUpdate and componentWillUnmount, but in hooks, we can do everything in a single hook called useEffect.
+- In class component, we have to use this keyword and also we have to bind event listeners, which increases complexity. This is prevented in react functional components.
+- Improving Readability of Component Tree
+- Encapsulating Side Effects
+- Composable and Reusable Logic
+    - Custom hooks are considerably a great mechanism for sharing logic across various components. A custom hook is simply a function that uses one or more React hooks and it can be called within a functional component, just like a standard hook.
+# Types of Hooks
+# useState
+```
+const [blogName, setBlogName] = useState("React");
+<button onClick={() => setBlogName("React Hooks")}>Change</button>
+```
+# useEffect
+- Allows us to perform side effects in the functional components.
+- It's equivalent to componentDidMount(), componentDidUpdate(), and componentWillUnmount() lifecycle methods.
+- when the document title has to be based on counter state value, and when the document title has to updated whenever the counter value changes, we used to have below line of code in these lifecycle methods `componentDidMount()`, `componentDidUpdate()`. But with useEffect it's all simplified.
+```
+useEffect(() => {
+    document.title = `You clicked ${count} times`;
+}, [count]);
+```
+## Side Effects: 
+- Updating the DOM,
+- Fetching and consuming data from a server API,
+- Setting up a subscription, etc.
+### 2 Types of side effects
+- Effects Without Cleanup: manual DOM mutations, Network requests, Logging, etc.
+- Effects With Cleanup: Some effects require cleanup after DOM updation. For example, if we want to set up a subscription to some external data source, it is important to clean up memory so that we don't introduce a memory leak. React performs the cleanup of memory when the component unmounts. However, as we know that, effects run for every render method and not just once. Therefore, React also cleans up effects from the previous render before running the effects next time.
+# useContext
+# useReducer
+# useCallback
+# useMemo
+# useRef
+# useImperativeHandle
+# useLayoutEffect
+# useDebugValue
+# Custom Hooks
+- A related logic can be tightly coupled in a custom hook
 =============================================================================================
 =============================================================================================
 #### General notes
