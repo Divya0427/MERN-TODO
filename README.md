@@ -28,16 +28,20 @@ User can Edit and also delete the todos.
      ```
     - Invoke on specific uri path
         - Using use():
-          ```app.use('/user/:id', function (req, res, next) {
+          ```
+          app.use('/user/:id', function (req, res, next) {
             console.log('Request Type:', req.method)
             next()
-          });```
+          });
+          ```
         - Using METHOD():
-          ```app.get('/user/:id', function (req, res, next) {
+          ```
+          app.get('/user/:id', function (req, res, next) {
             res.send('USER')
-          });```
+          });
+          ```
     - Invoke series of middleware functions on specific uri path
-        ````
+        ```
         app.use('/user/:id', function (req, res, next) {
           console.log('Request URL:', req.originalUrl)
           next()
@@ -45,7 +49,7 @@ User can Edit and also delete the todos.
           console.log('Request Type:', req.method)
           next()
         });
-        ```
+       ```
 
 
     
