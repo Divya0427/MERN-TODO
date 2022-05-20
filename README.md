@@ -184,8 +184,56 @@ POST request: also have 2 aspects
     bcrypt.compare(someOtherPlaintextPwd, hash, function(err, result) {
         // result == false
     });
-
-
+# JWT JSON Web Token
+- JSON Web Token is a standard used to create access tokens for an application. It works this way: the server generates a token that certifies the user identity and sends it to the client.
+- In simpler words JWT Tokens is more like a key. If user is authenticated, the server will give a key(the token) using which the client can now(access) open/use routes or services.
+- Generate tokens for client-side authorisation.
+- To secure endpoints and even authenticate users
+- Instead of sending success after login, we will sign the user._id(the unique field -> users id) with the TOKEN_SECRET.
+- JWT to sign the credentials and bycrypt to encrypt the pwd before storing them in our database.
+- JSON Web Token is an open standard for securely transferring data within parties using a JSON object.
+- JWT is used for stateless authentication mechanisms for users and providers, this means maintaining session is on the client-side instead of storing sessions on the server.
+- While signup, salt and hash the password before saving it in the DB using bcrypt(`bcrypt.genSalt` `bcrypt.hash`)
+    ```
+    bcrypt.hash(req.body.pwd, 10, (err, hash) => {if(hash) {
+        email: req.body.email,
+        password: hash
+    }}
+    ``` and then save it in DB `user.save()`
+- While login, 
+    ```
+    bcrypt.compare(req.body.pwd, pwdFromDb, (err, result) => { 
+    //result is true if matches otherwise false})
+    if(result) {
+        //now generate token and sent it in the response to client
+        const token = jwt.sign(
+              {
+                email: dbEmail,
+                userId: db._id
+              },
+              process.env.JWT_KEY,
+              {
+                  expiresIn: "1h"
+              }
+        );
+    }
+    ```
+    While accessing the protected routes, verify the token using JWT 
+    ```
+    const token = req.headers.authorization.split(" ")[1];
+    //const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
+        if(err) {
+            console.log(`err=>${err}`);
+        }
+        if(decoded) {
+            console.log(`decoded=>${decoded}`);
+            next();
+        }
+    });
+    req.userData = decoded;
+    ```
+    
 - `mkdir MERN-todo-app`
 - `npx create-react-app client`
 - `mkdir server && cd server`
