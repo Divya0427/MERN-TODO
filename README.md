@@ -298,6 +298,50 @@ useEffect(() => {
 - Effects Without Cleanup: manual DOM mutations, Network requests, Logging, etc.
 - Effects With Cleanup: Some effects require cleanup after DOM updation. For example, if we want to set up a subscription to some external data source, it is important to clean up memory so that we don't introduce a memory leak. React performs the cleanup of memory when the component unmounts. However, as we know that, effects run for every render method and not just once. Therefore, React also cleans up effects from the previous render before running the effects next time.
 # useContext
+- Used to create common data that can be accessed throughout the component hierarchy without passing the props down manually to each level.
+- Context defined will be available to all the child components without involving “props”.
+- In order to solve the below-specified problem of passing data to even those components which do not require it only because the data is required in the further hierarchy.
+- We need to explicitly keep passing the “props” to even those components which do not even use it only to make the data available to the hierarchy below. We are maintaining the overhead of constantly passing the “props” data throughout the entire Hierarchy.
+    `var userDetailContext = React.createContext(null);`//Creating a context object
+    Use this context object on the top-level component and will add the data which is required throughout the hierarchy. “ userDetailContext.Provider” is used for providing value to the context object created. The object that needs to be added is provided to the “value” attribute. Now, any component in the hierarchy will have access to the context data.
+    ```
+    export default function UserDetailsComponent() {
+    var [userDetails] = useState({
+        name: "Mayank",
+        age: 30
+    });
+
+    return (
+        <userDetailContext.Provider value={userDetails}>
+        <h1>This is the Parent Component</h1>
+        <hr />
+        <ChildComponent />
+        </userDetailContext.Provider>
+    );
+    }
+    ```
+    The context data added on the top can be accessed by the `useContext` keyword
+    ```
+    function ChildComponent(props) {
+        return (
+            <div>
+            <h2>This is Child Component</h2>
+            <hr />
+            <SubChildComponent />
+            </div>
+        );
+    }
+    function SubChildComponent(props) {
+        var contextData = React.useContext(userDetailContext);
+        return (
+            <div>
+            <h3>This is Sub Child Component</h3>
+            <h4>User Name: {contextData.name}</h4>
+            <h4>User Age: {contextData.age}</h4>
+            </div>
+        );
+    }
+    ```
 # useReducer
 # useCallback
 # useMemo
