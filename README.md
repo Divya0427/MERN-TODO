@@ -375,11 +375,10 @@ const reducer = (state, action) => {
                    };
     };
 }
-```
-
-
-    
+``` 
 # useCallback
+- Used to optimize the rendering behavior of React functional components.
+- 
 # useMemo
 # useRef
 # useImperativeHandle
