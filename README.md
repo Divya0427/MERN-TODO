@@ -343,6 +343,42 @@ useEffect(() => {
     }
     ```
 # useReducer
+- to manage complex state in your application.
+![image](https://user-images.githubusercontent.com/9032135/170092937-1680a933-e50f-4774-ac62-a931661a3d5f.png)
+- In the component, `const [state, dispatch] = useReducer(reducer, initialState);`
+- Reducers are pure functions. Given a set of inputs, it should always return the same output. No surprises, side effects, API calls, mutations.
+```
+const reducer = (state, action) => {
+...
+// update the state with rules dictated by action
+...
+return updatedState;
+}
+```
+- Action looks like `{type: "INCREASE STATE BY PAYLOAD", payload: 5}`
+```
+const reducer = (state, action) => {
+    switch(action.type){
+        case "DEPOSIT MONEY IN BANK":
+            return {...state,
+                    moneyInBank: state.moneyInBank + action.payload
+                   };
+        case "PAY SOME BILLS":
+            return {...state,
+                    billsToPay: state.billsToPay - action.payload
+                   };
+        case "CLEAN THE SOFA":
+            return {...state,
+                    moneyInBank: state.moneyInBank
+                                 + state.moneyInSofa,
+                    moneyInSofa: 0
+                   };
+    };
+}
+```
+
+
+    
 # useCallback
 # useMemo
 # useRef
