@@ -482,9 +482,104 @@ const reducer = (state, action) => {
 # useImperativeHandle
 # useLayoutEffect
 # useDebugValue
+- Like watchers in chrome browser for debugging.
 # Custom Hooks
 - A related logic can be tightly coupled in a custom hook
 # HOCs
+- Let's assume we've Like, Add Comment buttons(we've to show no.of likes and comments in the UI on a particular user interaction). They have the same logic like counter.
+- HOC is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React’s compositional nature.
+```
+import React, { Component } from "react";
+const HOC = (Component, data) => {
+//You can do modification in data then pass it to the component
+  return class extends React.Component {
+    render() {
+      return (
+        <Component />
+      );
+    }
+  };
+};
+export default HOC;
+```
+Hoc.js
+```
+import React, { Component } from "react";
+const HOC = (Component, data) => {
+  //console.log("data", data);
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: data,
+      };
+    }
+    handleClick = () => {
+      this.setState({
+        count: this.state.count + 1,
+      });
+    };
+    render() {
+      return (
+        <Component        
+          CountNumber={this.state.count}
+          handleCLick={this.handleClick}
+        />
+      );
+    }
+  };
+};
+export default HOC;
+```
+LikeComponent
+```
+import React, { Component } from "react";
+import HOC from "./HOC";
+class LikesCount extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.CountNumber} <br />
+        <button onClick={this.props.handleCLick}>Like👍🏻</button>
+      </div>
+    );
+  }
+}
+const EnhancedLikes = HOC(LikesCount, 5);
+export default EnhancedLikes;
+```
+CommentComponent
+```
+import React, { Component } from "react";
+import HOC from "./HOC";
+class CommentsCount extends Component {
+  render() {
+    return (
+      <div>
+        Total Comments : {this.props.CountNumber} <br />
+        <button onClick={this.props.handleCLick}>Add Comment!</button>
+      </div>
+    );
+  }
+}
+const EnhancedComments = HOC(CommentsCount, 10);
+export default EnhancedComments;
+```
+MainComponent
+```
+import React from "react";
+import EnhancedLikes from "./components/HOC/LikesCount";
+import EnhancedComments from "./components/HOC/CommentsCount";\
+function App() {
+  return (
+    <div className="App">
+      <EnhancedLikes />
+      <EnhancedComments />
+    </div>
+  );
+}
+export default App;
+```
 # Virtual DOM
 # Testing in ReactJs
 # 
