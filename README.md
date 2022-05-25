@@ -585,6 +585,42 @@ export default App;
 ```
 # Virtual DOM
 # Testing in ReactJs
+https://smashingmagazine.com/2020/06/practical-guide-testing-react-applications-jest/
+## Enzyme
+- You will need to install enzyme along with an Adapter corresponding to the version of react (or other UI Component library) you are using.
+- Enzyme is a JavaScript Testing utility for React that makes it easier to test your React Components' output.
+- You can also manipulate, traverse, and in some ways simulate runtime given the output.
+- Enzyme's API is meant to be intuitive and flexible by mimicking jQuery's API for DOM manipulation and traversal.
+`npm i --save-dev enzyme enzyme-adapter-react-16`
+- Enzyme has adapters that provide compatibility with React 16.x, React 15.x, React 0.14.x and React 0.13.x.
+![image](https://user-images.githubusercontent.com/9032135/170309124-d658ef46-6909-4611-b9a1-32cc8e1bc42d.png)
+npmjs.com/package/enzyme
+github.com/enzymejs/enzyme/blob/HEAD/docs/api/shallow.md
+### Sinon
+
+### Shallow rendering
+### Full DOM rendering
+### Static rendered markup
+
+## Adapter
+- The enzyme API is the same regardless of the version of React you are using, but how React renders and interacts with what is rendered changes depending on the React version.
+- The adapter abstracts away anything that changes based on the React version so the core enzyme code can stay the same.
+- https://stackoverflow.com/questions/55344422/what-is-adapter-in-enzyme
+## Jest
+- mount: This method renders the full DOM, including the child components of the parent component, in which we are running the tests.
+- shallow: This renders only the individual components that we are testing. It does not render child components. This enables us to test components in isolation.
+
+
+## test runner
+- Jest is a JavaScript test runner that lets you access the DOM via jsdom. While jsdom is only an approximation of how the browser works, it is often good enough for testing React components.
+- A JavaScript library for creating, running, and structuring tests.
+- react-test0renderer is a react package for snapshot testing.
+
+                       
+## Unit test
+## Component test
+## Snapshot test
+
 # 
 =============================================================================================
 =============================================================================================
