@@ -255,6 +255,9 @@ POST request: also have 2 aspects
     - empty array: Means there's no dependency; executed when the react component is rendered for the 1st time; subsequent updates to the component would not run this fn
     - [ isLoading ]: Whenever this state variable changes, then this fn will be executed
 # What are React hooks(RH)?
+- componentDidUpdate can be replicated with useEffect(fn), where fn is the function to run upon rerendering.
+- componentDidMount methods can be replicated with useEffect(fn, []), where fn is the function to run upon rerendering, and [] is an array of objects for which the component will rerender, if and only if at least one has changed value since the previous render. As there are none, useEffect() runs once, on first mount.
+- state can be replicated with useState()
 - It allows you to use state and other React features without writing a class.
 - Hooks are the functions which "hook into" React state and lifecycle features from function components.
 - It does not work inside classes.
