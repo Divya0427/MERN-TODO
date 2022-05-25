@@ -377,6 +377,7 @@ const reducer = (state, action) => {
 }
 ``` 
 # useCallback
+- It memoizes functions to improve the performance.
 - Used to optimize the rendering behavior of React functional components.
 - It help us prevent some unnecessary renders and therefore gain a performance boost.
 - Improving performance in React applications includes,
@@ -458,7 +459,22 @@ const reducer = (state, action) => {
     };
     ```    
 # useMemo
-- 
+- It can potentially make your app more performant, by managing unnecessary re-rendering.
+- The re-rendering process in react is fired, in every life cycle of a component every time an update occurs, and operations like “for loops” can be time, memory, processing power consuming.
+- Expensive operations, can harm the performance and thus lead to poor user experience.
+- It's based on the Memoization concept(optimization technique) to speed up computer programs by storing the results of expensive function calls and returning the cached result when again with the same parameters. It is remembering or cashing a value when the same parameters are passed in subsequently so we don't have to rerender every single time.
+- `const memoizedvalue = useMemo(() => computeExpensiveValue(a, b), [a, b]);`
+- useMemo watch the elements inside the array, and detect the changes in values, if there are no changes it doesn’t matter if the entire component re-renders, the function result will stay the same and it will not re-run but instead will return the memoized result. This can eventually help to avoid expensive calculations on every render.
+- ![image](https://user-images.githubusercontent.com/9032135/170242333-232526c4-07da-4148-b304-2fa1649b6f56.png)
+
+  ```
+  const slowAdding = useMemo((num) => {
+    for(i=0; i<=200000; i++) {
+        return num * 2;
+    }
+  } , [count]);
+  ```
+
 # useRef
 # useImperativeHandle
 # useLayoutEffect
