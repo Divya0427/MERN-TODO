@@ -378,14 +378,97 @@ const reducer = (state, action) => {
 ``` 
 # useCallback
 - Used to optimize the rendering behavior of React functional components.
+- It help us prevent some unnecessary renders and therefore gain a performance boost.
+- Improving performance in React applications includes,
+    - Preventing unnecessary renders
+    - Reducing the time a render takes to propagate
+- Referential equality and function equality:
+    - Functions are treated like any other variable and thus are First-class functions.
+    - A function can be passed as an argument to other functions, returned by another function, assigned as a value to a variable, compared, and so on. In short, it can do anything that an object can do.
+    - 
+    ```
+      // factory function
+        function sumFunctionFactory() {
+          return (a, b) => a + b;
+        }
+
+        const function1 = sumFunctionFactory();
+        const function2 = sumFunctionFactory();
+
+        function1(2, 3);
+        // expected output: 5
+        function2(2, 3);
+        // expected output: 5
+
+        console.log(function1 === function2);// these fns share the same code source, but they are distinct separate function objects,
+        //meaning they refer to different instances
+        // expected output: false
+      ```
+- In React, when a component re-renders, every function inside of the component is recreated and therefore these functions’ references change between renders.
+- Below will return a memoized instance of the callback that only changes if one of the dependencies has changed. This means that instead of recreating the function object on every re-render, we can use the same function object between renders.
 - 
+
+    ```
+    const memoized = useCallback(() => {
+       // the callback function to be memoized
+     },
+      // dependencies array
+    []);
+    //useCallback(callback, dependencies)
+    ```
+    ```
+    export default function ParentComponent() {
+      const [state, setState] = useState(false);
+      const [dep] = useState(false);
+      console.log("Parent Component redered");
+
+      const handler = useCallback(
+        (event) => {
+          console.log("You clicked ", event.currentTarget);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [dep],
+      );
+      /* handler callback is memoized by useCallback(). As long as dep is the same, useCallback() returns the same function object. When <ParentComponent> re-renders, the handler function object remains the same and doesn’t break the memorization of <MyList> */
+    
+      const statehanddler = () => {
+        setState(!state);
+      };
+      return (
+        <>
+          <button onClick={statehanddler}>Change State Of Parent Component</button>
+          <MyList handler={handler} />
+        </>
+      );
+    ```
+- useCallback() has it's downsides, primarily code complexity. There are a lot of situations where adding useCallback() doesn’t make sense and you just have to accept function recreation.
+- It has it's performance drawbacks, as it still has to run on every component re-render.
+    ```
+    export default function MyComponent() {
+          // poor usage of useCallback(). here, it's not helping optimization, since we’re creating the clickHandler function on every render anyways; actually, the optimization costs more than not having the optimization.
+          const clickHandler = useCallback(() => {
+            // handle the click event
+          }, []);
+
+          return <ButtonWrapper onClick={clickHandler} />;
+        }
+
+        const ButtonWrapper = ({ clickHandler }) => {
+          return <button onClick={clickHandler}>Child Component</button>;
+    };
+    ```    
 # useMemo
+- 
 # useRef
 # useImperativeHandle
 # useLayoutEffect
 # useDebugValue
 # Custom Hooks
 - A related logic can be tightly coupled in a custom hook
+# HOCs
+# Virtual DOM
+# Testing in ReactJs
+# 
 =============================================================================================
 =============================================================================================
 #### General notes
