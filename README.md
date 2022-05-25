@@ -474,8 +474,11 @@ const reducer = (state, action) => {
     }
   } , [count]);
   ```
-
 # useRef
+- 2 main uses of useRef:
+    - Accessing the DOM nodes or React elements
+    - Keeping a mutable variable
+- `const refContainer = useRef(initialValue);`
 # useImperativeHandle
 # useLayoutEffect
 # useDebugValue
