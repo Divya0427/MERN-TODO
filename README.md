@@ -293,6 +293,27 @@ useEffect(() => {
     document.title = `You clicked ${count} times`;
 }, [count]);
 ```
+useEffect Quick Tips:
+    ```
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+    });//It runs on initial render and every update(componentDidMount, componentDidUpdate) whichmeans after every render
+    
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+    }, []);//Runs only on initial render; mimicking only componentDidMount
+    
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+        return () => {
+            console.log("component will unmount");
+        }
+    }, []);//return fn from the useEffect will be run on before unmounting the component
+    
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+    }, [count]);
+    ```
 ## Side Effects: 
 - Updating the DOM,
 - Fetching and consuming data from a server API,
