@@ -19,6 +19,9 @@ const Navigation = () => {
                             <span className={ classes.badge }></span>
                         </Link>
                     </li>
+                    <li>
+                        <Link to='/tasks'>Tasks</Link>
+                    </li>
                 </ul>
             </nav>
         </header>

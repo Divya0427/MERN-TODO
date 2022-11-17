@@ -1,0 +1,23 @@
+.tasks-container {
+    padding: 3%;
+}
+.tasks {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    min-height: 100vh;
+    grid-column-gap: 15PX;
+}
+.tasks-column {
+    /* border-right: solid 1PX grey;
+    border-left: solid 1PX grey; */
+    background: #c6c7c969;
+}
+.task-tile {
+    background: white;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.task-category {
+    padding: 10px;
+}
