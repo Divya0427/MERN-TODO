@@ -256,6 +256,9 @@ POST request: also have 2 aspects
     - empty array: Means there's no dependency; executed when the react component is rendered for the 1st time; subsequent updates to the component would not run this fn
     - [ isLoading ]: Whenever this state variable changes, then this fn will be executed
 # What are React hooks(RH)?
+- componentDidUpdate can be replicated with useEffect(fn), where fn is the function to run upon rerendering.
+- componentDidMount methods can be replicated with useEffect(fn, []), where fn is the function to run upon rerendering, and [] is an array of objects for which the component will rerender, if and only if at least one has changed value since the previous render. As there are none, useEffect() runs once, on first mount.
+- state can be replicated with useState()
 - It allows you to use state and other React features without writing a class.
 - Hooks are the functions which "hook into" React state and lifecycle features from function components.
 - It does not work inside classes.
@@ -291,6 +294,27 @@ useEffect(() => {
     document.title = `You clicked ${count} times`;
 }, [count]);
 ```
+useEffect Quick Tips:
+    ```
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+    });//It runs on initial render and every update(componentDidMount, componentDidUpdate) whichmeans after every render
+    
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+    }, []);//Runs only on initial render; mimicking only componentDidMount
+    
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+        return () => {
+            console.log("component will unmount");
+        }
+    }, []);//return fn from the useEffect will be run on before unmounting the component
+    
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+    }, [count]);
+    ```
 ## Side Effects: 
 - Updating the DOM,
 - Fetching and consuming data from a server API,
@@ -344,14 +368,282 @@ useEffect(() => {
     }
     ```
 # useReducer
+- to manage complex state in your application.
+![image](https://user-images.githubusercontent.com/9032135/170092937-1680a933-e50f-4774-ac62-a931661a3d5f.png)
+- In the component, `const [state, dispatch] = useReducer(reducer, initialState);`
+- Reducers are pure functions. Given a set of inputs, it should always return the same output. No surprises, side effects, API calls, mutations.
+```
+const reducer = (state, action) => {
+...
+// update the state with rules dictated by action
+...
+return updatedState;
+}
+```
+- Action looks like `{type: "INCREASE STATE BY PAYLOAD", payload: 5}`
+```
+const reducer = (state, action) => {
+    switch(action.type){
+        case "DEPOSIT MONEY IN BANK":
+            return {...state,
+                    moneyInBank: state.moneyInBank + action.payload
+                   };
+        case "PAY SOME BILLS":
+            return {...state,
+                    billsToPay: state.billsToPay - action.payload
+                   };
+        case "CLEAN THE SOFA":
+            return {...state,
+                    moneyInBank: state.moneyInBank
+                                 + state.moneyInSofa,
+                    moneyInSofa: 0
+                   };
+    };
+}
+``` 
 # useCallback
+- It memoizes functions to improve the performance.
+- Used to optimize the rendering behavior of React functional components.
+- It help us prevent some unnecessary renders and therefore gain a performance boost.
+- Improving performance in React applications includes,
+    - Preventing unnecessary renders
+    - Reducing the time a render takes to propagate
+- Referential equality and function equality:
+    - Functions are treated like any other variable and thus are First-class functions.
+    - A function can be passed as an argument to other functions, returned by another function, assigned as a value to a variable, compared, and so on. In short, it can do anything that an object can do.
+    - 
+    ```
+      // factory function
+        function sumFunctionFactory() {
+          return (a, b) => a + b;
+        }
+
+        const function1 = sumFunctionFactory();
+        const function2 = sumFunctionFactory();
+
+        function1(2, 3);
+        // expected output: 5
+        function2(2, 3);
+        // expected output: 5
+
+        console.log(function1 === function2);// these fns share the same code source, but they are distinct separate function objects,
+        //meaning they refer to different instances
+        // expected output: false
+      ```
+- In React, when a component re-renders, every function inside of the component is recreated and therefore these functions’ references change between renders.
+- Below will return a memoized instance of the callback that only changes if one of the dependencies has changed. This means that instead of recreating the function object on every re-render, we can use the same function object between renders.
+- 
+
+    ```
+    const memoized = useCallback(() => {
+       // the callback function to be memoized
+     },
+      // dependencies array
+    []);
+    //useCallback(callback, dependencies)
+    ```
+    ```
+    export default function ParentComponent() {
+      const [state, setState] = useState(false);
+      const [dep] = useState(false);
+      console.log("Parent Component redered");
+
+      const handler = useCallback(
+        (event) => {
+          console.log("You clicked ", event.currentTarget);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [dep],
+      );
+      /* handler callback is memoized by useCallback(). As long as dep is the same, useCallback() returns the same function object. When <ParentComponent> re-renders, the handler function object remains the same and doesn’t break the memorization of <MyList> */
+    
+      const statehanddler = () => {
+        setState(!state);
+      };
+      return (
+        <>
+          <button onClick={statehanddler}>Change State Of Parent Component</button>
+          <MyList handler={handler} />
+        </>
+      );
+    ```
+- useCallback() has it's downsides, primarily code complexity. There are a lot of situations where adding useCallback() doesn’t make sense and you just have to accept function recreation.
+- It has it's performance drawbacks, as it still has to run on every component re-render.
+    ```
+    export default function MyComponent() {
+          // poor usage of useCallback(). here, it's not helping optimization, since we’re creating the clickHandler function on every render anyways; actually, the optimization costs more than not having the optimization.
+          const clickHandler = useCallback(() => {
+            // handle the click event
+          }, []);
+
+          return <ButtonWrapper onClick={clickHandler} />;
+        }
+
+        const ButtonWrapper = ({ clickHandler }) => {
+          return <button onClick={clickHandler}>Child Component</button>;
+    };
+    ```    
 # useMemo
+- It can potentially make your app more performant, by managing unnecessary re-rendering.
+- The re-rendering process in react is fired, in every life cycle of a component every time an update occurs, and operations like “for loops” can be time, memory, processing power consuming.
+- Expensive operations, can harm the performance and thus lead to poor user experience.
+- It's based on the Memoization concept(optimization technique) to speed up computer programs by storing the results of expensive function calls and returning the cached result when again with the same parameters. It is remembering or cashing a value when the same parameters are passed in subsequently so we don't have to rerender every single time.
+- `const memoizedvalue = useMemo(() => computeExpensiveValue(a, b), [a, b]);`
+- useMemo watch the elements inside the array, and detect the changes in values, if there are no changes it doesn’t matter if the entire component re-renders, the function result will stay the same and it will not re-run but instead will return the memoized result. This can eventually help to avoid expensive calculations on every render.
+- ![image](https://user-images.githubusercontent.com/9032135/170242333-232526c4-07da-4148-b304-2fa1649b6f56.png)
+
+  ```
+  const slowAdding = useMemo((num) => {
+    for(i=0; i<=200000; i++) {
+        return num * 2;
+    }
+  } , [count]);
+  ```
 # useRef
+- 2 main uses of useRef:
+    - Accessing the DOM nodes or React elements
+    - Keeping a mutable variable
+- `const refContainer = useRef(initialValue);`
 # useImperativeHandle
 # useLayoutEffect
 # useDebugValue
+- Like watchers in chrome browser for debugging.
 # Custom Hooks
 - A related logic can be tightly coupled in a custom hook
+# HOCs
+- Let's assume we've Like, Add Comment buttons(we've to show no.of likes and comments in the UI on a particular user interaction). They have the same logic like counter.
+- HOC is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React’s compositional nature.
+```
+import React, { Component } from "react";
+const HOC = (Component, data) => {
+//You can do modification in data then pass it to the component
+  return class extends React.Component {
+    render() {
+      return (
+        <Component />
+      );
+    }
+  };
+};
+export default HOC;
+```
+Hoc.js
+```
+import React, { Component } from "react";
+const HOC = (Component, data) => {
+  //console.log("data", data);
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: data,
+      };
+    }
+    handleClick = () => {
+      this.setState({
+        count: this.state.count + 1,
+      });
+    };
+    render() {
+      return (
+        <Component        
+          CountNumber={this.state.count}
+          handleCLick={this.handleClick}
+        />
+      );
+    }
+  };
+};
+export default HOC;
+```
+LikeComponent
+```
+import React, { Component } from "react";
+import HOC from "./HOC";
+class LikesCount extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.CountNumber} <br />
+        <button onClick={this.props.handleCLick}>Like👍🏻</button>
+      </div>
+    );
+  }
+}
+const EnhancedLikes = HOC(LikesCount, 5);
+export default EnhancedLikes;
+```
+CommentComponent
+```
+import React, { Component } from "react";
+import HOC from "./HOC";
+class CommentsCount extends Component {
+  render() {
+    return (
+      <div>
+        Total Comments : {this.props.CountNumber} <br />
+        <button onClick={this.props.handleCLick}>Add Comment!</button>
+      </div>
+    );
+  }
+}
+const EnhancedComments = HOC(CommentsCount, 10);
+export default EnhancedComments;
+```
+MainComponent
+```
+import React from "react";
+import EnhancedLikes from "./components/HOC/LikesCount";
+import EnhancedComments from "./components/HOC/CommentsCount";\
+function App() {
+  return (
+    <div className="App">
+      <EnhancedLikes />
+      <EnhancedComments />
+    </div>
+  );
+}
+export default App;
+```
+# Virtual DOM
+# Testing in ReactJs
+https://smashingmagazine.com/2020/06/practical-guide-testing-react-applications-jest/
+## Enzyme
+- You will need to install enzyme along with an Adapter corresponding to the version of react (or other UI Component library) you are using.
+- Enzyme is a JavaScript Testing utility for React that makes it easier to test your React Components' output.
+- You can also manipulate, traverse, and in some ways simulate runtime given the output.
+- Enzyme's API is meant to be intuitive and flexible by mimicking jQuery's API for DOM manipulation and traversal.
+`npm i --save-dev enzyme enzyme-adapter-react-16`
+- Enzyme has adapters that provide compatibility with React 16.x, React 15.x, React 0.14.x and React 0.13.x.
+![image](https://user-images.githubusercontent.com/9032135/170309124-d658ef46-6909-4611-b9a1-32cc8e1bc42d.png)
+npmjs.com/package/enzyme
+github.com/enzymejs/enzyme/blob/HEAD/docs/api/shallow.md
+### Sinon
+
+### Shallow rendering
+### Full DOM rendering
+### Static rendered markup
+
+## Adapter
+- The enzyme API is the same regardless of the version of React you are using, but how React renders and interacts with what is rendered changes depending on the React version.
+- The adapter abstracts away anything that changes based on the React version so the core enzyme code can stay the same.
+- https://stackoverflow.com/questions/55344422/what-is-adapter-in-enzyme
+## Jest
+- mount: This method renders the full DOM, including the child components of the parent component, in which we are running the tests.
+- shallow: This renders only the individual components that we are testing. It does not render child components. This enables us to test components in isolation.
+
+
+## test runner
+- Jest is a JavaScript test runner that lets you access the DOM via jsdom. While jsdom is only an approximation of how the browser works, it is often good enough for testing React components.
+- A JavaScript library for creating, running, and structuring tests.
+- react-test0renderer is a react package for snapshot testing.
+
+                       
+## Unit test
+## Component test
+## Snapshot test
+
+# 
 =============================================================================================
 =============================================================================================
 #### General notes
