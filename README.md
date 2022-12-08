@@ -928,6 +928,22 @@ console.log(pipe(trim, toLowerCase, wrap)); // <javascript>undefined</javascript
 // we cannot build a pipeline with a bunch of functions and string
 // Pipeline needs a function with 1-parameter; in this case output of toLowerCase(); no other parameters
 
+// Basic Example
+const mul = (a, b) => {
+    return a * b;
+};
+
+mul(2,3);
+
+
+function mul(a) {
+    return function(b) {
+        return a * b;
+    };
+};
+
+const mul = a => b => a * b;
+mul(2)(3);// mul(2) returns a fn; pass 2nd arg to it
 // currying a fn
 const curriedWrap = type => str => `<${type}>${str}</${type}>`;
 const curriedTransform = pipe(trim, toLowerCase, curriedWrap("span")); // pass div to curriedWrap and see
