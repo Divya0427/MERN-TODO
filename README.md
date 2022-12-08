@@ -741,341 +741,342 @@ morgan presets
     
 #### REDUX
 What is Redux? / Definition
-    - fb had 1 issue where it's UI was not in sync in 2014. Then they created this architectural pattern Flux
-    - Redux is inspired by Flux and got popular with it's simplicity. Flux has multiple stores whereas redux has 1
-    - state management library
-    - React state vs redux state(pictures from blog) > 
-    - context vs redux(codesandbox links form blog) > screenshare1
-    - Official definition > Predictable state container for js apps
-    - Other pros of redux > Time travel debugging
-                           > If feature in our application is not working in production, then we have to ask them to reproduce that. But we may not succeed
-                           > Logrocket is a tool with which we can exactly in the same state as user; redux dev tools in production for every user.
-    - Redux is based on FP principles
+- fb had 1 issue where it's UI was not in sync in 2014. Then they created this architectural pattern Flux
+- Redux is inspired by Flux and got popular with it's simplicity. Flux has multiple stores whereas redux has 1
+- state management library
+- React state vs redux state(pictures from blog) > 
+- context vs redux(codesandbox links form blog) > screenshare1
+- Official definition > Predictable state container for js apps
+- Other pros of redux > Time travel debugging
+                       > If feature in our application is not working in production, then we have to ask them to reproduce that. But we may not succeed
+                       > Logrocket is a tool with which we can exactly in the same state as user; redux dev tools in production for every user.
+- Redux is based on FP principles
 
 When to use Redux? screenshare7
 
 
 ### What is Redux?
-    - Inspired by Flux architectural pattern(in 2014 fb had issue in keeping it's components in sync notifications count)
-    - But redux got popular due to it's simplicity
+- Inspired by Flux architectural pattern(in 2014 fb had issue in keeping it's components in sync notifications count)
+- But redux got popular due to it's simplicity
 
 
 ### React n redux both have state. How are they different?
-    - Show diagrams form blog which depicts state management in Reactjs and Redux
+- Show diagrams form blog which depicts state management in Reactjs and Redux
 
 ### Context n Redux both keeps the app state at 1 place. How are they different?
-    - code sandbox from blog
+- code sandbox from blog
 
 ### Definition from documentation
-    - predictable
-        - what is predictable? `APPLICATION STATE`
-        - How is that state updated? `REDUCER`
-        - What is so magical about this reducer? `REDUCER IS A PURE FUNCTION`
-        - WHat is a pure function? `Once of the concepts of FUNCTIONAL PROGRAMMING`
-    - state container
-        - stores the state of our application
-        - Logincomp({userName, pwd})
-        - UsersComp(users: [])
-        - Application({
-            isUserLoggedIn,
-            userName,
-            onlineusers: [],
-            isModalOpened: true
-        })
-    - for js apps
-        - Not tied/tighltly coupled with to react
-        - can be used with React, Angular, Vue, vanilla js
+- predictable
+    - what is predictable? `APPLICATION STATE`
+    - How is that state updated? `REDUCER`
+    - What is so magical about this reducer? `REDUCER IS A PURE FUNCTION`
+    - WHat is a pure function? `Once of the concepts of FUNCTIONAL PROGRAMMING`
+- state container
+    - stores the state of our application
+    - Logincomp({userName, pwd})
+    - UsersComp(users: [])
+    - Application({
+        isUserLoggedIn,
+        userName,
+        onlineusers: [],
+        isModalOpened: true
+    })
+- for js apps
+    - Not tied/tighltly coupled with to react
+    - can be used with React, Angular, Vue, vanilla js
 
 ### Advantages of Redux
-    - Time travel debugging
-    - Debugging made easier
-    - we can see the whole application state tree at one place in dev tools
-    - In prod when we have issue, we have to ask the reproducible steps; With LogRocket tool, we can reload the app in the same state as user; For every session, we can get the URL and play that video which has net work requests, logger, UI(screenshot from local computer)
+- Time travel debugging
+- Debugging made easier
+- we can see the whole application state tree at one place in dev tools
+- In prod when we have issue, we have to ask the reproducible steps; With LogRocket tool, we can reload the app in the same state as user; For every session, we can get the URL and play that video which has net work requests, logger, UI(screenshot from local computer)
 
 ### When should I use Redux
-    - When we have large amounts of application state that are needed in many places of the app
-    - when the app state is updated frequently over time
-    - The logic to update that state may be complex
-    - when the app has a medium/ large sized codebase
+- When we have large amounts of application state that are needed in many places of the app
+- when the app state is updated frequently over time
+- The logic to update that state may be complex
+- when the app has a medium/ large sized codebase
 
 ### Core concepts
-    - Actions
-    - Store
-    - Reducer
+- Actions
+- Store
+- Reducer
 
 ### Principles
-    - Single source of truth
-    - State is read-only
-    - Changes are made with pure functions
+- Single source of truth
+- State is read-only
+- Changes are made with pure functions
 
     Redux is based on Functional programming principles. If we're not familiar with these concepts, it might be confusing 
 
 let's focus on fundamentals before we move onto more complex stuff.
 
 #### Functional Programming
-    - What is FP? `OFCOURSE, IT'S A ONE OF THE PROGRAMMING PARADIGMS`
-    - What is a paradigm? `A STYLE OF PROGRAMMING`
-    - FP is composing a problem into bunch of small n reusable functions; takes some i/p and returns o/p; doesn't mutate the data
-    - fn1   fn2   fn3 => we can compose all of these to build more complex fns
-    - Benefits:
-        - More concise
-        - Easier to debug
-        - Easier to test
-        - More scalable
-    - we express everything as a function. For Example: JS(Multi paradigm; Not a pure FP language, but we can still apply FP principles in js)
-    - The idea is to write small and reusable functions and compose them to build more complex and real world problems.
+- What is FP? `OFCOURSE, IT'S A ONE OF THE PROGRAMMING PARADIGMS`
+- What is a paradigm? `A STYLE OF PROGRAMMING`
+- FP is composing a problem into bunch of small n reusable functions; takes some i/p and returns o/p; doesn't mutate the data
+- fn1   fn2   fn3 => we can compose all of these to build more complex fns
+- Benefits:
+    - More concise
+    - Easier to debug
+    - Easier to test
+    - More scalable
+- we express everything as a function. For Example: JS(Multi paradigm; Not a pure FP language, but we can still apply FP principles in js)
+- The idea is to write small and reusable functions and compose them to build more complex and real world problems.
 
 ### Functions as First-class citizens(action creators)
-    - We can treat the fns just like any other variables
-        - Assign to a variable
-        - Pass as an arg
-        - Return from other functions
+- We can treat the fns just like any other variables
+    - Assign to a variable
+    - Pass as an arg
+    - Return from other functions
 
-    ```
-    // Functions as first class citizens
+```
+// Functions as first class citizens
 
-    function getParadigm() {
+function getParadigm() {
+    return "Functional Programming";
+};
+
+let a = getParadigm;// 1/ "someString"/ true/ false; Not calling the nf; Simply passing a reference to it
+console.log('calling a::', a());
+console.log('calling getParadigm::', getParadigm());
+// Passing as an argument to a function
+function showParadigm(fnMessage) {
+    console.log(fnMessage());
+};
+
+showParadigm(getParadigm);
+
+// fn can be returned from other functions
+function getParadigmm() {
+    return function() {
         return "Functional Programming";
-    };
-
-    let a = getParadigm;// 1/ "someString"/ true/ false; Not calling the nf; Simply passing a reference to it
-    console.log('calling a::', a());
-    console.log('calling getParadigm::', getParadigm());
-    // Passing as an argument to a function
-    function showParadigm(fnMessage) {
-        console.log(fnMessage());
-    };
-
-    showParadigm(getParadigm);
-
-    // fn can be returned from other functions
-    function getParadigmm() {
-        return function() {
-            return "Functional Programming";
-        }
     }
+}
 
-    let b = getParadigmm();
-    let msg = b();
-    console.log('msg: ', msg);
+let b = getParadigmm();
+let msg = b();
+console.log('msg: ', msg);
 
     ```
 
 ### Higher-order functions(combine reducers)
-    - A fn that takes a fn as an arg or returns it or both
-    ```
-    // Examples: showParadigm, getParadigmm
-    let numbers = [1, 2, 3];
-    numbers.map(number => number + 7); // map is HOF bcs it takes fn as an arg
-    setTimeout(() => console.log('Hello'), 1000); // setTimeout is HOF bcs it takes fn as an arg
-    ```
+- A fn that takes a fn as an arg or returns it or both
+```
+// Examples: showParadigm, getParadigmm
+let numbers = [1, 2, 3];
+numbers.map(number => number + 7); // map is HOF bcs it takes fn as an arg
+setTimeout(() => console.log('Hello'), 1000); // setTimeout is HOF bcs it takes fn as an arg
+```
 
 ### Function Composition(while configuring dev tools)
-    - The idea is to write small and reusable functions and compose them to build more complex and real world problems.
-    - Non-functional style of code:
-        ```
-        let input = ' Javascript ';
-        let output = `<div>${input.trim().toLowerCase()}</div>`;
-        console.log('Non-Functional result', output);
-        ```
-    - Functional way of writing code
-            - trim
-            - wrapInDiv
-        ```
-        const trim = str => str.trim();
-        const wrapInDiv = str => `<div>${str}</div>`;
-        const toLowerCase = str => str.toLowerCase();
-        const result = wrapInDiv(toLowerCase(trim(input)));
-        console.log('Functional result:', result);
-        ```
-        - Cons:
-            - The problem is these parenthesis. As we work with more complex problem, we'll end up having so many.
-            - We have to read the expression from right to left
+- The idea is to write small and reusable functions and compose them to build more complex and real world problems.
+- Non-functional style of code:
+    ```
+    let input = ' Javascript ';
+    let output = `<div>${input.trim().toLowerCase()}</div>`;
+    console.log('Non-Functional result', output);
+    ```
+- Functional way of writing code
+        - trim
+        - wrapInDiv
+    ```
+    const trim = str => str.trim();
+    const wrapInDiv = str => `<div>${str}</div>`;
+    const toLowerCase = str => str.toLowerCase();
+    const result = wrapInDiv(toLowerCase(trim(input)));
+    console.log('Functional result:', result);
+    ```
+    - Cons:
+        - The problem is these parenthesis. As we work with more complex problem, we'll end up having so many.
+        - We have to read the expression from right to left
 
 ### Composing and Piping(while configuring dev tools)
-    - Lodash is a popular utility library for javascript
-    - Lodash also has a package with a lot of functions for functional programming
-    - So, to explain this, we'll use Lodash.
-    ```
-    npm i lodash
-    import { compose, pipe } from 'lodash/fp';
-    const { compose, pipe } = require('lodash/fp');
-    const composedResult = compose(wrapInDiv, toLowerCase, trim);// simply, passing references
-    console.log('Compose example without parenthesis:', composedResult(input));
-    /* 
-        - compose is a HOF bcs it takes bunch of functions as i/p
-        - It solved parenthesis issue but still have the right to left reading. To solve this we've pipe
-    */
-    const transform = pipe(trim, toLowerCase, wrapInDiv);
-    console.log('Pipe example without parenthesis and LTR:', transform(input));
-    ```
+- Lodash is a popular utility library for javascript
+- Lodash also has a package with a lot of functions for functional programming
+- So, to explain this, we'll use Lodash.
+```
+npm i lodash
+import { compose, pipe } from 'lodash/fp';
+const { compose, pipe } = require('lodash/fp');
+const composedResult = compose(wrapInDiv, toLowerCase, trim);// simply, passing references
+console.log('Compose example without parenthesis:', composedResult(input));
+/* 
+    - compose is a HOF bcs it takes bunch of functions as i/p
+    - It solved parenthesis issue but still have the right to left reading. To solve this we've pipe
+*/
+const transform = pipe(trim, toLowerCase, wrapInDiv);
+console.log('Pipe example without parenthesis and LTR:', transform(input));
+```
 
 ### Currying (dispatch)
-    - Currying simply means evaluating functions with multiple arguments and decomposing them into a sequence of functions with a single argument.
-    f(a, b, c, d) => f(a)(b)(c)(d);
-    - currying is when a function — instead of taking all arguments at one time — takes the first one and returns a new function, which takes the second one and returns a new function, which takes the third one, etc. until all arguments are completed.
-    ```
-    const wrapInSpan = str => `<span>${str}</span>`;// wrapInSpan, wrapInDiv looks similar. It'd be better if we parameterize it
-    const wrap = (type, str) => `<${type}>${str}</${type}>`;
-    console.log(pipe(trim, toLowerCase, wrap)); // <javascript>undefined</javascript>
-    /*
-        output of 1 fn is the ip of next fn
-        wrap (type(javascript), str(undefined))
-    */
-    // console.log(pipe(trim, toLowerCase, wrap("div")));// we'll get an error: Expected a function
-    // Every arg to the pipe() has to be a fn;
-    // wrap("div") returns a string `<${type}>${str}</${type}>`
-    // we cannot build a pipeline with a bunch of functions and string
-    // Pipeline needs a function with 1-parameter; in this case output of toLowerCase(); no other parameters
+- Currying simply means evaluating functions with multiple arguments and decomposing them into a sequence of functions with a single argument.
+f(a, b, c, d) => f(a)(b)(c)(d);
+- currying is when a function — instead of taking all arguments at one time — takes the first one and returns a new function, which takes the second one and returns a new function, which takes the third one, etc. until all arguments are completed.
+```
+const wrapInSpan = str => `<span>${str}</span>`;// wrapInSpan, wrapInDiv looks similar. It'd be better if we parameterize it
+const wrap = (type, str) => `<${type}>${str}</${type}>`;
+console.log(pipe(trim, toLowerCase, wrap)); // <javascript>undefined</javascript>
+/*
+    output of 1 fn is the ip of next fn
+    wrap (type(javascript), str(undefined))
+*/
+// console.log(pipe(trim, toLowerCase, wrap("div")));// we'll get an error: Expected a function
+// Every arg to the pipe() has to be a fn;
+// wrap("div") returns a string `<${type}>${str}</${type}>`
+// we cannot build a pipeline with a bunch of functions and string
+// Pipeline needs a function with 1-parameter; in this case output of toLowerCase(); no other parameters
 
-    // currying a fn
-    const curriedWrap = type => str => `<${type}>${str}</${type}>`;
-    const curriedTransform = pipe(trim, toLowerCase, curriedWrap("span")); // pass div to curriedWrap and see
-    console.log('Result with currying:', curriedTransform(input));
-    ```
+// currying a fn
+const curriedWrap = type => str => `<${type}>${str}</${type}>`;
+const curriedTransform = pipe(trim, toLowerCase, curriedWrap("span")); // pass div to curriedWrap and see
+console.log('Result with currying:', curriedTransform(input));
+```
 
 ### Pure functions(Reducers)
 
-    - f(x) => y
-    - same parameters => same o/p
+- f(x) => y
+- same parameters => same o/p
+```
+// Impure fn
+function myFunction(number) {
+    return number * Math.random();
+}
+// Pure fn
+function myFunction(number) {
+    return number * 7;
+}
+```
+- No random values
+- No current date/time (new Date.now())
+- we cannot read/ change the global state(DOM, files, b etc.,)
     ```
-    // Impure fn
-    function myFunction(number) {
-        return number * Math.random();
+    //Impure ex
+    function isSeniorCitizen(age) {
+        return age > minAge;// minAge is a global state;
     }
-    // Pure fn
-    function myFunction(number) {
-        return number * 7;
+    //Pure ex
+    function isSeniorCitizen(age, minAge) {
+        return age > minAge;// minAge is not a global state;
     }
     ```
-    - No random values
-    - No current date/time (new Date.now())
-    - we cannot read/ change the global state(DOM, files, b etc.,)
-        ```
-        //Impure ex
-        function isSeniorCitizen(age) {
-            return age > minAge;// minAge is a global state;
-        }
-        //Pure ex
-        function isSeniorCitizen(age, minAge) {
-            return age > minAge;// minAge is not a global state;
-        }
-        ```
-    - No mutation of parameters
-    - Benefits:
-        - Self-documenting
-        - Easily testable; Because we don;'t have to set any global state prior to testing these functions
-        - Concurrency; As we don't use/ mutate global state, we can run these functions in parallel
-        - cacheable; Memoizing js functions
-        ```
-        const add = n => n + 10;
-        const memoizedAdd = () => {
-            let cache = {};
-            return (n) => {
-                console.log('cache:', cache);
-                if (n in cache) {
-                    console.log('From cache');
-                    return cache[n];
-                } else {
-                    console.log('New input');
-                    let result = n + 10;
-                    cache[n] = result;
-                    return result;
-                }
+- No mutation of parameters
+- Benefits:
+    - Self-documenting
+    - Easily testable; Because we don;'t have to set any global state prior to testing these functions
+    - Concurrency; As we don't use/ mutate global state, we can run these functions in parallel
+    - cacheable; Memoizing js functions
+    ```
+    const add = n => n + 10;
+    const memoizedAdd = () => {
+        let cache = {};
+        return (n) => {
+            console.log('cache:', cache);
+            if (n in cache) {
+                console.log('From cache');
+                return cache[n];
+            } else {
+                console.log('New input');
+                let result = n + 10;
+                cache[n] = result;
+                return result;
             }
-        };
-        const newAdd = memoizedAdd();
-        console.log('memoized addition: ', newAdd(9));
-        console.log('memoized addition: ', newAdd(2));
-        console.log('memoized addition: ', newAdd(3));
-        console.log('memoized addition: ', newAdd(9));
-        ```
+        }
+    };
+    const newAdd = memoizedAdd();
+    console.log('memoized addition: ', newAdd(9));
+    console.log('memoized addition: ', newAdd(2));
+    console.log('memoized addition: ', newAdd(3));
+    console.log('memoized addition: ', newAdd(9));
+    ```
 
 ### Immutability
-    - Once we create an object, we cannot change it. Instead, take a copy and change that.
-    ```
-    let name = "Redux";
-    let newName = name.toUpperCase();//name remains the same
+- Once we create an object, we cannot change it. Instead, take a copy and change that.
+```
+let name = "Redux";
+let newName = name.toUpperCase();//name remains the same
 
-    let book = {};
-    book.title = "Redux";// Objs n arrays are mutable in js. Bcs js is not pure FP language, it's a 
-    // multi paradigm. But we can still apply FP concepts.
-    ```
-    - Pros:
-        - Makes our app predictable
-        - If we call a fn and pass an obj, we know that obj is not gonna changed. So, there won't be any surprise
-        - Faster change detection; references of actual obj and it's copy are different.
-        - Concurrency; As we don't use/ mutate global state, we can run these functions in parallel
-    - Cons:
-        - All the values should be copied to new obj every time we change an object. 
-        - Copying objs may cause memory overhead. It's an issue when we deal with several 1000s of objs   
+let book = {};
+book.title = "Redux";// Objs n arrays are mutable in js. Bcs js is not pure FP language, it's a 
+// multi paradigm. But we can still apply FP concepts.
+```
+- Pros:
+    - Makes our app predictable
+    - If we call a fn and pass an obj, we know that obj is not gonna changed. So, there won't be any surprise
+    - Faster change detection; references of actual obj and it's copy are different.
+    - Concurrency; As we don't use/ mutate global state, we can run these functions in parallel
+- Cons:
+    - All the values should be copied to new obj every time we change an object. 
+    - Copying objs may cause memory overhead. It's an issue when we deal with several 1000s of objs   
 
 ### Updating Objects
-    ```
-    // -----------------UPDATING OBJECTS
-    const employee = {
-        name: 'X'
-    };
-    // 1st way of updating an object
-    const newEmpUsingAssign = Object.assign({}, employee, {age: 30, name: 'Z'});
-    console.log(`newEmpUsingAssign: ${newEmpUsingAssign}`);
-    // 2nd way of updating an object
-    const newEmpUsingSpread = {...employee, salary: 7};
-    // Shallow copy vs deep copy
-    const emp = {
-        name: 'Y',
-        address: {
-            country: 'INDIA',
-            city: 'Hyderabad'
-        }
-    };
-    const shallowCopiedEmp = {...emp};
-    shallowCopiedEmp.address.city = "Kakinada";// Mutating; It'll change the actuall object; Because it's a shallow copy
-
-    const deepCopiedEmp = {
-        ...emp,
-        address: {
-            ...emp.address,
-            city: 'Bangalore'
-        }
+```
+// -----------------UPDATING OBJECTS
+const employee = {
+    name: 'X'
+};
+// 1st way of updating an object
+const newEmpUsingAssign = Object.assign({}, employee, {age: 30, name: 'Z'});
+console.log(`newEmpUsingAssign: ${newEmpUsingAssign}`);
+// 2nd way of updating an object
+const newEmpUsingSpread = {...employee, salary: 7};
+// Shallow copy vs deep copy
+const emp = {
+    name: 'Y',
+    address: {
+        country: 'INDIA',
+        city: 'Hyderabad'
     }
-    ```
-    - We've libraries specifically made for immutability(Immer, Immutability)
+};
+const shallowCopiedEmp = {...emp};
+shallowCopiedEmp.address.city = "Kakinada";// Mutating; It'll change the actuall object; Because it's a shallow copy
+
+const deepCopiedEmp = {
+    ...emp,
+    address: {
+        ...emp.address,
+        city: 'Bangalore'
+    }
+}
+```
+- We've libraries specifically made for immutability(Immer, Immutability)
 
 ### Updating Arrays
-    https://jsfiddle.net/Divyaaa/01ga1rvn/
-    ```
-    const nums = [1, 2, 3];
-    // Adding
-    const updatedArr = [...nums, 4];
-    const index = nums.indexOf(2);
-    const added = [...nums.slice(0, index), 4, ...nums.slice(index)];
+https://jsfiddle.net/Divyaaa/01ga1rvn/
+```
+const nums = [1, 2, 3];
+// Adding
+const updatedArr = [...nums, 4];
+const index = nums.indexOf(2);
+const added = [...nums.slice(0, index), 4, ...nums.slice(index)];
 
-    // Remove
-    const res = nums.filter(n => n !== 2);
+// Remove
+const res = nums.filter(n => n !== 2);
 
-    //Update
-    const updatedNums = nums.map(n => n === 2 ? 20 : n);
-    ```
+//Update
+const updatedNums = nums.map(n => n === 2 ? 20 : n);
+```
 
 ### Enforcing Immutability
-    - Immutable data structures
-    - Libraries
-        - Immutable(By fb)
-        - Immer(by MobX)
-        - Mori
+- Immutable data structures
+- Libraries
+    - Immutable(By fb)
+    - Immer(by MobX)
+    - Mori
 
 ### Immutable js
-    - provides a bunch of immutable DS
-    ```
-    let book = {
-        title: "Redux"
-    };
-    function publish(book) {
-        book.isPublished = true;// Mutation of global state 
-    };
-    publish(book);
-    npm i immutable
+- provides a bunch of immutable DS
+```
+let book = {
+    title: "Redux"
+};
+function publish(book) {
+    book.isPublished = true;// Mutation of global state 
+};
+publish(book);
+npm i immutable
+```
 
 
 
