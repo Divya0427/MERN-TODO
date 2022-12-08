@@ -859,7 +859,7 @@ let b = getParadigmm();
 let msg = b();
 console.log('msg: ', msg);
 
-    ```
+```
 
 ### Higher-order functions(combine reducers)
 - A fn that takes a fn as an arg or returns it or both
