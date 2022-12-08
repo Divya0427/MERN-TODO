@@ -1068,15 +1068,52 @@ const updatedNums = nums.map(n => n === 2 ? 20 : n);
 ### Immutable js
 - provides a bunch of immutable DS
 ```
-let book = {
+let bookObj = {
     title: "Redux"
 };
 function publish(book) {
     book.isPublished = true;// Mutation of global state 
 };
-publish(book);
+publish(bookObj);
 npm i immutable
+import { Map } from 'immutable';
+const { Map, toJS } = require('immutable');
+
+// With ImmutableJs
+let immutableBook = Map({
+    title: "Redux"
+}); // it's not a regular object
+console.log(immutableBook);//
+console.log(immutableBook.get('title'));
+console.log(immutableBook.toJS());
+const updated = immutableBook.set('isPublished', true);// It's not gonna modify the original object; It returns a new object; Because all these Map objects are immutable; That's why we've to reassign the immutableBook variable
+console.log('updated: ', updated);// it won't get updated
+console.log(immutableBook.toJS());// To get a plain JS object
+console.log(immutableBook.get('isPublished'));
+immutableBook = immutableBook.set('isPublished', true);// It'll be updated with a new property
+console.log(immutableBook.toJS());
 ```
+- Problem is we've to learn the whole new API
+
+
+### Immer
+```
+import { produce } from 'immer';
+const { produce } = require('immer');
+let myBook = {
+    title: "ReduxToolkit"
+};
+function publishIt(book) {
+    return produce(book, draftBook => {// 2nd arg to produce is a fn that specifies our mutation
+        draftBook.isImmer = true;// this is mutating code
+    });// book won't get changed. draftBook is kind of proxy to book that records all the changes we're making to book; takes copy of this obj and apply all the chnages. wriing the code as if we're mutating the obj but actually not; produce returns updated obj. so we've to return it
+    
+}
+let updatedBook = publishIt(myBook);
+console.log('updatedBook: ', updatedBook);
+```
+    
+    
 
 
 
