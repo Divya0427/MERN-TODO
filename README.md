@@ -863,7 +863,8 @@ console.log('msg: ', msg);
 
 ### Higher-order functions(combine reducers)
 - A fn that takes a fn as an arg or returns it or both
-![HOFDefinition](https://frontendinterviewtopics.blogspot.com/p/redux.html)
+![HOFDefinition](https://miro.medium.com/max/1400/1*KbE6qWmCQg5isyMRQzwfpg.webp)
+    
 ```
 // Examples: showParadigm, getParadigmm
 let numbers = [1, 2, 3];
