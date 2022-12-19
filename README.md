@@ -863,6 +863,7 @@ console.log('msg: ', msg);
 
 ### Higher-order functions(combine reducers)
 - A fn that takes a fn as an arg or returns it or both
+![HOFDefinition](https://frontendinterviewtopics.blogspot.com/p/redux.html)
 ```
 // Examples: showParadigm, getParadigmm
 let numbers = [1, 2, 3];
@@ -948,6 +949,26 @@ mul(2)(3);// mul(2) returns a fn; pass 2nd arg to it
 const curriedWrap = type => str => `<${type}>${str}</${type}>`;
 const curriedTransform = pipe(trim, toLowerCase, curriedWrap("span")); // pass div to curriedWrap and see
 console.log('Result with currying:', curriedTransform(input));
+// Example 2
+// without currying
+const greet = (first, second) => console.log(first + second)
+greet('Hi ', 'little kitty'); // Hi little kitty
+//Imagine you want to use the greet function to say Hi ${someone} several times in your code. If you do it with a
+//simple plain function as the first example, you’ll need to repeat Hi several times
+/*
+We’re creating a more semantic sayHi function based on a more generic one
+We’re not repeating 'Hi 'We’re creating a more semantic sayHi function based on a more generic one
+We’re not repeating 'Hi '
+*/
+greet('Hi ', 'dolphin');
+greet('Hi ', 'camel');
+greet('Hi ', 'snake');
+// with currying
+const sayHi = greet('Hi ');
+
+sayHi('dolphin 🐬');
+sayHi('camel 🐫');
+sayHi('snake 🐍');
 ```
 
 ### Pure functions(Reducers)
