@@ -1348,7 +1348,30 @@ let updatedBook = publishIt(myBook);
 console.log('updatedBook: ', updatedBook);
 ```
     
+ 
     
+
+    
+# Topics to brush up
+- Branching strategy - trunk based branching strategy
+- T-shirt sizing in agile
+- CSS Box model - Width, Height
+- SOLID Design principles
+- SonarQube quality gates
+- Configuring webpack
+- Singleton Pattern
+- Redux pattern - Reducer Pure function
+- Web components - Can we use it in ANgular or React.js
+- Micro frontends
+- Shadow DOM
+- Quality checks
+- React Profiler
+- Performance checks in application
+- XSS
+- Cross site scripting
+- Polyfills
+- CI CD configuring and related tools
+
 
 
 
