@@ -1371,6 +1371,18 @@ console.log('updatedBook: ', updatedBook);
 - Cross site scripting
 - Polyfills
 - CI CD configuring and related tools
+- ```
+    let hash = 'hasVal';
+    if (true) {
+        let user = 'userVal';
+        function sayHi() {
+            console.log(`${hash}- ${user}`);
+        }
+    }
+    sayHi();
+  ```
+Explain scoping, hoisting, output
+
 
 
 
