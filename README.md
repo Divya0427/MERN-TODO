@@ -1430,6 +1430,14 @@ console.log('updatedBook: ', updatedBook);
     }
     sayHi();
   ```
+ - Grunt Gulp webpack
+ - Reactjs Design patterns
+ - CSRF
+ - Jenkins
+ - Check performance of progressive web apps using profiling in developer tools
+ - 1st paint 
+ - Layers of caching
+ - 
 Explain scoping, hoisting, output
 
 
