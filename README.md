@@ -1397,7 +1397,54 @@ let updatedBook = publishIt(myBook);
 console.log('updatedBook: ', updatedBook);
 ```
     
- 
+## SOLID Design Principles
+### Liskov substitution principle
+```
+class Bird {
+    layEgg() {
+
+    }
+};
+
+class SwimmingBird extends Bird {
+    swim() {
+
+    }
+}
+
+class FlyingBird extends Bird {
+    fly() {
+        
+    }
+}
+
+class Eagle extends FlyingBird {
+   // layEgg
+   // fly
+}
+
+class Penguin extends SwimmingBird {
+   // layEgg
+   // swim
+}
+const penguin = new Penguin();
+penguin.swim();
+penguin.layEgg();
+
+const eagle = new Eagle();
+eagle.fly();
+eagle.layEgg();
+
+
+
+eagle penguin > Bird
+layEgg, fly ; layEgg, swim
+
+If Bird have below, Eagle is unnecessarily getting swim and penguin is getting fly; That means inheritance is not done correctly
+layEgg
+fly
+swim
+```
     
 
     
