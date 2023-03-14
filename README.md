@@ -401,6 +401,54 @@ const reducer = (state, action) => {
     };
 }
 ``` 
+```
+const employees = [
+    { name: 'Alina', company: 'Google', id: 1 },
+    { name: 'Vika', company: 'Coca Cola', id: 2 },
+    { name: 'Alex', company: 'Jonson & Jonson', id: 3 },
+    { name: 'Vlad', company: 'Google', id: 4 },
+    { name: 'Fibi', company: 'Coca Cola', id: 5 },
+    { name: 'Joey', company: 'Google', id: 6 }
+];
+const list = [
+    {
+        name: 'Display',
+        group: 'Technical detals',
+        id: '60',
+        value: '4'
+    },
+    {
+        name: 'Manufacturer',
+        group: 'Manufacturer',
+        id: '58',
+        value: 'Apple'
+    },
+    {
+        name: 'OS',
+        group: 'Technical detals',
+        id: '37',
+        value: 'Apple iOS'
+    }
+];
+const listData = list.reduce((accumulator, currentValue) => {
+    return {
+        ...accumulator,
+        [currentValue.group]: [
+            ...(accumulator[currentValue.group] || []),
+            currentValue
+        ]
+    };
+}, {});
+const employeeData = employees.reduce((accumulator, currentValue) => {
+    return {
+        ...accumulator,
+        [currentValue.company]: [
+            ...(accumulator[currentValue.company] || []),
+            currentValue
+        ]
+    };
+}, {});
+```
 # useCallback
 - It memoizes functions to improve the performance.
 - Used to optimize the rendering behavior of React functional components.
