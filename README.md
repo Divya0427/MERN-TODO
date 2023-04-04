@@ -1493,7 +1493,103 @@ layEgg
 fly
 swim
 ```
-    
+### Pokemon API fetch all, and abilities of a selected pokemon on dropdown change 
+```
+import fetchData from "./fetchUtil";
+import "./styles.css";
+
+const fetchPokemons = async () => {
+  const data = await fetchData("https://pokeapi.co/api/v2/pokemon/");
+  data.results.length &&
+    data.results.map((pokemon) => {
+      // const { name, url } = pokemon;
+      // const option = document.createElement('option');
+      // option.setAttribute('name', name);
+      // option.setAttribute('id', url.split('/').slice(-2,-1));
+
+      const id = pokemon.url.split("/").slice(-2, -1)[0];
+      const option = document.createElement("option");
+      option.setAttribute("value", id);
+      option.appendChild(document.createTextNode(pokemon.name));
+      return document.getElementById("pokemons").appendChild(option);
+      /* return (document.getElementById(
+        "pokemons"
+      ).innerHTML += `<option id="${id}" name="${id}" value="${pokemon.name}">${pokemon.name}</option>`); */
+    });
+};
+fetchPokemons();
+const renderPokemonDetails = (abilities) => {
+  abilities.forEach((ability) => {
+    console.log(ability);
+    document.getElementById(
+      "info-container"
+    ).innerHTML += ` ${ability.ability.name}`;
+    /* return (document.getElementsByClassName("info-container")[0].innerHTML +=
+      data.ability.name); */
+  });
+};
+const getPokemon = async (id) => {
+  fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+    .then((response) => {
+      console.log("success while");
+      cachedResponse[id] = response;
+      renderPokemonDetails(response.abilities);
+    })
+    .catch((err) => {
+      console.log("error while");
+    });
+};
+
+const cachedResponse = {};
+const changeHandler = (e) => {
+  const id = e.target.value;
+  document.getElementById("info-container").innerHTML = "";
+  if (cachedResponse[id]) {
+    renderPokemonDetails(cachedResponse[id].abilities);
+  } else {
+    getPokemon(id);
+  }
+};
+document.getElementById("pokemons").addEventListener("change", changeHandler);
+
+```
+fetch util:
+```
+const fetchData = async (url, options = {}) => {
+  let { body, headers, method = "GET" } = options;
+  headers = {
+    "Content-Type": "application/json",
+    ...headers
+  };
+  if (body) {
+    body = typeof body === "object" ? JSON.stringify(body) : body;
+  }
+  const requestOptions = {
+    headers,
+    body,
+    method,
+    ...options
+  };
+  try {
+    console.log(`options: , ${JSON.parse(JSON.stringify(requestOptions))}`);
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    console.log(`success: , ${JSON.parse(JSON.stringify(data))}`);
+    return data;
+  } catch (err) {
+    console.log(`Error: , ${err}`);
+    throw new Error(err);
+  }
+};
+
+export default fetchData;
+
+```
+index.html
+```
+    <select id="pokemons"> </select>
+    <div class="info-container" id="info-container"></div>
+```
 
     
 # Topics to brush up
