@@ -1590,7 +1590,37 @@ index.html
     <select id="pokemons"> </select>
     <div class="info-container" id="info-container"></div>
 ```
+### git hooks
+    
+`npm install husky`
+.husky > pre-commit
+```
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
+yarn eslint
+yarn test:coverage
+```
+### Unit testing coverage config
+```
+"jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/index.js",
+      "!src/serviceWorker.js",
+      "!src/modules/designer-portal/components/associated-sections/manage-options/*.{js,jsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 96,
+        "functions": 95,
+        "lines": 97,
+        "statements": 97
+      }
+    }
+}
+```
+    
     
 # Topics to brush up
 - Branching strategy - trunk based branching strategy
