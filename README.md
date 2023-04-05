@@ -1658,6 +1658,16 @@ yarn test:coverage
  - Check performance of progressive web apps using profiling in developer tools
  - 1st paint 
  - Layers of caching
+ - SSO Login
+ - CSR, SSR, SPA, MPA
+ - Micro services, microfrontends, Monolithic
+ - Concurrent rendering
+ - React injection attcks
+ - XSS
+ - CSS specificity
+ - CSS box-sizing border-box
+ - why mobile first aproach
+ - Atomic design pattern
  - 
 Explain scoping, hoisting, output
 
