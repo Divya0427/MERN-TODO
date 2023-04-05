@@ -1668,7 +1668,7 @@ yarn test:coverage
  - CSS box-sizing border-box
  - why mobile first aproach
  - Atomic design pattern
- - 
+ - The whole project is of 1 MB n we want 1kb in production. how do you check the size?
 Explain scoping, hoisting, output
 
 
