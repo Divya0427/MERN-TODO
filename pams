@@ -1,0 +1,93 @@
+Approve collection,
+Publish collection
+designs under a collection
+Approve designs(Bulk)
+Publish designs(Bulk)
+upload custom designs
+creating a collection without product type
+Sugar previews
+pagination for collections n designs
+Sonar bugs
+Sunset/ Discontinue a design
+Show review page after upload
+feature flags
+showing appropriate errors in the process of generating sugar previews
+taking interviews
+Upskilling
+
+products(incompatible)(all)
+products(incompatible)
+
+- Introduced Reduxjs/toolkit to reduce the complexity in managing the state
+- Always ready to assist the peers
+- Taking adhoc requests proactively and working on it by putting in an extra hours
+
+
+
+- The client is content with the features we deliver.
+
+
+- Mastered Reduxjs/ toolkit and other advanced concepts in ReactJs and Javascript
+- Introduced the state management library to simplify the state changes
+
+- No escalations
+- Delivering the committed stories without any spill-overs
+- Improved the productivity by incorporating a few proven design patterns like DRY, singleton etc.,
+
+
+- Always make sure 100% of unit test coverage for the components I developed
+- Adhere to the coding standards like using latest ES6 features, reusable modules
+- Using linting tools for a better productivity
+
+
+- Working on the JIRA bugs as per the priority
+- I fixed 25% of SonarQube bugs
+- I always make sure the code to be deployed doesn't produce any security related issues 
+
+
+- Reducing the code duplication and complexity in order to resolve SonarQube issues
+- Adding necessary type checks.
+- Identified that SonarQube version we're using is not the latest one and it lack a few things
+
+- Reduced the page load time by refactoring the components and the way we pass the props
+
+
+- Always available. It could be weekend/ odd-hours/ holiday except a couple of times in the weekend
+- Resolving the issue or analyzing the root cause ASAP
+
+
+
+- Implemented Approve, Publish for collections and designs at both individual and bulk levels
+- Implemented rendering of Sugar previews on the matched product variants
+- Indicating the user what happened exactly in case of any exception
+- Have a good rapport with the team
+- I can easily express my concerns or suggestions with the team
+- I have a good team collaboration skills
+
+
+
+- Given upskilling session
+- Actively assessing the candidates for the recruitment
+- Effective communication with the team
+
+
+
+- Actively checking Sonarqube for the reported issues and solving
+- Actively monitors my PR build until it is done
+- Maintaining or improving the test coverage before commit
+- Resolving the bugs from the backlog 
+
+
+- Implemented Approve, Publish for collections and designs at both individual and bulk levels
+- Implemented rendering of Sugar previews on the matched product variants
+- Indicating the user what happened exactly in case of any exception
+- Have a good rapport with the team
+- I can easily express my concerns or suggestions with the team
+- I have a good team collaboration skills
+
+
+- Contributing to the organization by taking interviews and upskilling session
+- Following the coding standards, a proven solutions
+- Keeping track of SonarQube, JIRA issues and fixing
+- I can effectively communicate with the team
+- I keep up-skilling myself on a wide range of topics
